@@ -4,7 +4,7 @@ import { faMugSaucer, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import MainTab from './navigations/tabs';
+import MainTab from './(tabs)';
 
 export default function App() {
   library.add(fab, faSquareCheck, faMugSaucer);
