@@ -12,4 +12,4 @@ type RootTabParamList = {
   Search: undefined;
   Video: undefined;
   Profile: undefined;
-} & ParamListBase
+} & ParamListBase;
