@@ -1,4 +1,4 @@
-import { DATE } from '@/assets/data/post';
+import { generateRandomPost } from '@/app/utils/common';
 import IconBookmark from '@/assets/images/icon-bookmark.svg';
 import IconLike from '@/assets/images/icon-favorite.svg';
 import IconMsg from '@/assets/images/icon-msg.svg';
@@ -13,10 +13,12 @@ import {
   State,
   TapGestureHandler,
 } from 'react-native-gesture-handler';
+import Swiper from 'react-native-swiper';
 import tw from 'tailwind-react-native-classnames';
 
 export const Post = ({ info }: { info: PostInfo }) => {
   const doubleTapRef = useRef();
+  const carouselRef = useRef(null);
   const [likePost, setLikePost] = useState(false);
 
   const handleDoubleTap = ({ nativeEvent }: GestureHandlerStateChangeEvent) => {
@@ -39,15 +41,26 @@ export const Post = ({ info }: { info: PostInfo }) => {
           <FontAwesomeIcon icon={faEllipsis} size={20} />
         </TouchableOpacity>
       </View>
-      <GestureHandlerRootView style={tw`flex-1`}>
-        <TapGestureHandler
-          ref={doubleTapRef}
-          numberOfTaps={2}
-          onHandlerStateChange={handleDoubleTap}
-        >
-          <Image source={{ uri: info.Photo }} height={400} />
-        </TapGestureHandler>
-      </GestureHandlerRootView>
+      <Swiper
+        dotColor="#2525254a"
+        activeDotColor="#fff"
+        containerStyle={{ width: 400, height: 400 }}
+      >
+        {info?.Photo?.map((item, index) => (
+          <GestureHandlerRootView key={index} style={tw`flex-1`}>
+            <TapGestureHandler
+              ref={doubleTapRef}
+              numberOfTaps={2}
+              onHandlerStateChange={handleDoubleTap}
+            >
+              <Image
+                source={{ uri: item }}
+                style={{ width: 400, height: 400 }}
+              />
+            </TapGestureHandler>
+          </GestureHandlerRootView>
+        ))}
+      </Swiper>
       <View style={tw`flex flex-row justify-between px-2 pt-3`}>
         <View style={tw`flex flex-row`}>
           <TouchableOpacity
@@ -100,7 +113,8 @@ export const LimitedTimeBar = () => {
 export const PostList = () => {
   return (
     <FlatList
-      data={DATE}
+      ListHeaderComponent={<LimitedTimeBar />}
+      data={generateRandomPost(3)}
       renderItem={({ item }) => <Post info={item} />}
       keyExtractor={(item) => item.Id}
     />
