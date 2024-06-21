@@ -5,8 +5,8 @@ export const generateRandomPost = (length: number) => {
       Id: `${index}`,
       Account: `user${random}`,
       Photo: Array.from({ length: 3 }).map(
-        () =>
-          `https://picsum.photos/400/400?random=${Math.floor(Math.random() * 900) + 100}`,
+        () => `https://fakeimg.pl/300x300/E3E3E3`,
+        // `https://picsum.photos/400/400?random=${Math.floor(Math.random() * 900) + 100}`,
       ),
       Content: '',
       Like: random,
