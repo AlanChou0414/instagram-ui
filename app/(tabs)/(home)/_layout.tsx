@@ -6,7 +6,15 @@ import IconSend from '@/assets/images/icon-share.svg';
 import { faEllipsis, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useRef, useState } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   GestureHandlerRootView,
   GestureHandlerStateChangeEvent,
@@ -16,9 +24,10 @@ import {
 import Swiper from 'react-native-swiper';
 import tw from 'tailwind-react-native-classnames';
 
+const { width: screenWidth } = Dimensions.get('window');
+
 export const Post = ({ info }: { info: PostInfo }) => {
   const doubleTapRef = useRef();
-  const carouselRef = useRef(null);
   const [likePost, setLikePost] = useState(false);
 
   const handleDoubleTap = ({ nativeEvent }: GestureHandlerStateChangeEvent) => {
@@ -44,7 +53,7 @@ export const Post = ({ info }: { info: PostInfo }) => {
       <Swiper
         dotColor="#2525254a"
         activeDotColor="#fff"
-        containerStyle={{ width: 400, height: 400 }}
+        containerStyle={{ width: screenWidth, height: 350 }}
       >
         {info?.Photo?.map((item, index) => (
           <GestureHandlerRootView key={index} style={tw`flex-1`}>
@@ -55,7 +64,7 @@ export const Post = ({ info }: { info: PostInfo }) => {
             >
               <Image
                 source={{ uri: item }}
-                style={{ width: 400, height: 400 }}
+                style={{ width: screenWidth, height: 350 }}
               />
             </TapGestureHandler>
           </GestureHandlerRootView>
@@ -111,12 +120,24 @@ export const LimitedTimeBar = () => {
 };
 
 export const PostList = () => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+
   return (
     <FlatList
       ListHeaderComponent={<LimitedTimeBar />}
-      data={generateRandomPost(3)}
+      data={generateRandomPost(6)}
       renderItem={({ item }) => <Post info={item} />}
       keyExtractor={(item) => item.Id}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   );
 };

@@ -1,10 +1,13 @@
-import IconAddPost from '@/assets/images/icon-addport.svg';
-import IconHome from '@/assets/images/icon-home.svg';
-import IconSearch from '@/assets/images/icon-search.svg';
-import IconVideo from '@/assets/images/icon-video.svg';
+import IconAddPostActive from '@/assets/images/icon-addport-active.svg';
+import IconAddPostDefault from '@/assets/images/icon-addport-default.svg';
+import IconHomeActive from '@/assets/images/icon-home-active.svg';
+import IconHomeDefault from '@/assets/images/icon-home-default.svg';
+import IconSearchActive from '@/assets/images/icon-search-active.svg';
+import IconSearchDefault from '@/assets/images/icon-search-default.svg';
+import IconVideoActive from '@/assets/images/icon-video-active.svg';
+import IconVideoDefault from '@/assets/images/icon-video-default.svg';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
 import { RootTabParamList } from '../types/navigation';
 import AddPostScreen from './(AddPost)';
 import HomeScreen from './(home)';
@@ -21,21 +24,20 @@ const MainTab = () => {
       screenOptions={{
         tabBarStyle: { padding: 15, marginBottom: 20 },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: '#000',
-        tabBarInactiveTintColor: '#5a5a5a',
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <IconHome
-              style={tw`${focused ? 'mb-3' : ''}`}
-              width={35}
-              height={35}
-              color={color}
-            />
+          tabBarIcon: ({ focused }) => (
+            <>
+              {focused ? (
+                <IconHomeActive width={35} height={35} />
+              ) : (
+                <IconHomeDefault width={35} height={35} />
+              )}
+            </>
           ),
           headerShown: false,
         }}
@@ -44,22 +46,30 @@ const MainTab = () => {
         name="Search"
         component={SearchScreen}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <IconSearch
-              style={tw`${focused ? 'mb-3' : ''}`}
-              width={35}
-              height={35}
-              color={color}
-            />
+          tabBarIcon: ({ focused }) => (
+            <>
+              {focused ? (
+                <IconSearchActive width={35} height={35} />
+              ) : (
+                <IconSearchDefault width={35} height={35} />
+              )}
+            </>
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
         name="AddPost"
         component={AddPostScreen}
         options={{
-          tabBarIcon: ({ color }) => (
-            <IconAddPost width={35} height={35} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <>
+              {focused ? (
+                <IconAddPostActive width={35} height={35} />
+              ) : (
+                <IconAddPostDefault width={35} height={35} />
+              )}
+            </>
           ),
         }}
       />
@@ -67,13 +77,14 @@ const MainTab = () => {
         name="Video"
         component={VideoScreen}
         options={{
-          tabBarIcon: ({ color, focused }) => (
-            <IconVideo
-              style={tw`${focused ? 'mb-3' : ''}`}
-              width={35}
-              height={35}
-              color={color}
-            />
+          tabBarIcon: ({ focused }) => (
+            <>
+              {focused ? (
+                <IconVideoActive width={35} height={35} />
+              ) : (
+                <IconVideoDefault width={35} height={35} />
+              )}
+            </>
           ),
           headerShown: false,
         }}
@@ -85,7 +96,7 @@ const MainTab = () => {
           tabBarIcon: ({ focused }) => (
             <Image
               source={require('@/assets/images/avatars-default.png')}
-              style={[tw`${focused ? 'mb-3' : ''}`, { width: 30, height: 30 }]}
+              style={{ width: 30, height: 30 }}
             />
           ),
         }}
