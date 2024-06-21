@@ -5,4 +5,4 @@ type PostInfo = {
   Content: string;
   Like: number;
   Created: string;
-}
+};
