@@ -4,7 +4,7 @@ import { PostList } from './_layout';
 const HomeScreen = () => {
   return (
     <SafeAreaView>
-      <PostList />
+      <PostList post={12} />
     </SafeAreaView>
   );
 };

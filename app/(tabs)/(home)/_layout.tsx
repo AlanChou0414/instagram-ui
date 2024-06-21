@@ -119,7 +119,7 @@ export const LimitedTimeBar = () => {
   );
 };
 
-export const PostList = () => {
+export const PostList = ({ post }: { post: number }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -132,7 +132,7 @@ export const PostList = () => {
   return (
     <FlatList
       ListHeaderComponent={<LimitedTimeBar />}
-      data={generateRandomPost(6)}
+      data={generateRandomPost(post)}
       renderItem={({ item }) => <Post info={item} />}
       keyExtractor={(item) => item.Id}
       refreshControl={

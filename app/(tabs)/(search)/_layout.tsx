@@ -59,6 +59,7 @@ export const SearchBar = ({
           onFocus={onFocusInput}
           returnKeyType="search"
           onSubmitEditing={onSearch}
+          clearButtonMode="while-editing"
         />
       </View>
       {focusInput && (
@@ -81,17 +82,18 @@ export const SearchPost = ({ hiddenPost }: { hiddenPost: boolean }) => {
   };
 
   return (
-    <View>
+    <>
       {!hiddenPost && (
         <FlatList
+          style={tw`mb-14`}
           data={generateRandomPost(30)}
           renderItem={({ item }) => (
-            <View style={tw`w-1/3 p-0.5`}>
+            <TouchableOpacity style={tw`w-1/3 p-0.5`}>
               <Image
                 source={{ uri: 'https://fakeimg.pl/120x120/E3E3E3' }}
                 style={{ width: '100%', height: 120 }}
               />
-            </View>
+            </TouchableOpacity>
           )}
           numColumns={3}
           keyExtractor={(item) => item.Id}
@@ -100,6 +102,6 @@ export const SearchPost = ({ hiddenPost }: { hiddenPost: boolean }) => {
           }
         />
       )}
-    </View>
+    </>
   );
 };
